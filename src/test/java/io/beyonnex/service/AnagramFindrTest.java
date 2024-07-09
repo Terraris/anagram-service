@@ -5,13 +5,15 @@ import org.junit.jupiter.api.Test;
 import java.util.Set;
 
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class AnagramFindrTest {
-    private final AnagramFindr anagramFindr = new AnagramFindr();
 
     @Test
     public void testAreAnagrams_providesForFeatureOne() {
+        AnagramFindr anagramFindr = new AnagramFindr();
         assertTrue(anagramFindr.areAnagrams("New York Times", "monkeys write"));
         assertTrue(anagramFindr.areAnagrams("Church of Scientology", "rich-chosen goofy cult"));
         assertTrue(anagramFindr.areAnagrams("McDonald's restaurants", "Uncle Sam's standard rot"));
@@ -36,8 +38,11 @@ public class AnagramFindrTest {
 
     @Test
     public void testGetAnagrams_doesContainItselfIfQueriedInOtherCase() {
+        AnagramFindr anagramFindr = new AnagramFindr();
         anagramFindr.areAnagrams("Evil", "Vile");
+
         Set<String> anagramSetOfEvil = anagramFindr.getAnagrams("evil");
+
         assertEquals(2, anagramSetOfEvil.size()); // ist Evil != evil in anagram sprech'?
         assertTrue(anagramSetOfEvil.contains("Evil"));
         assertTrue(anagramSetOfEvil.contains("Vile"));
@@ -45,8 +50,11 @@ public class AnagramFindrTest {
 
     @Test
     public void testGetAnagrams_doesNotContainItself() {
+        AnagramFindr anagramFindr = new AnagramFindr();
         anagramFindr.areAnagrams("silent", "listen");
+
         Set<String> anagramSetOfListen = anagramFindr.getAnagrams("listen");
+
         assertEquals(1, anagramSetOfListen.size());
         assertTrue(anagramSetOfListen.contains("silent"));
         assertFalse(anagramSetOfListen.contains("listen"));
@@ -54,6 +62,7 @@ public class AnagramFindrTest {
 
     @Test
     public void testHypotheticalInvocations_providesForFeatureTwo() {
+        AnagramFindr anagramFindr = new AnagramFindr();
         String a = "Evil";
         String b = "Vile";
         String c = "life";
@@ -85,9 +94,11 @@ public class AnagramFindrTest {
 
     @Test
     public void testDuplicatesInAnagrams() {
+        AnagramFindr anagramFindr = new AnagramFindr();
         String a = "ana";
         String b = "naa";
         String c = "aan";
+
         assertTrue(anagramFindr.areAnagrams(a, b));
         assertTrue(anagramFindr.areAnagrams(a, c));
 
@@ -100,6 +111,8 @@ public class AnagramFindrTest {
 
     @Test
     public void testEmptyStringAnagram() {
+        AnagramFindr anagramFindr = new AnagramFindr();
+
         String a = "";
         String b = "";
         assertTrue(anagramFindr.areAnagrams(a, b));
