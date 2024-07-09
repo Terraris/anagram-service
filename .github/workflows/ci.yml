@@ -3,9 +3,13 @@ name: ci
 on:
   workflow_dispatch:
   push:
-    branches: [ develop ]
+    branches:
+      - develop
+      - 'feature/**'
   pull_request:
-    branches: [ develop ]
+    branches:
+      - develop
+      - 'feature/**'
 
 jobs:
   build:
@@ -23,4 +27,3 @@ jobs:
           cache: maven
       - name: maven-build
         run: mvn -B package --file pom.xml
-
