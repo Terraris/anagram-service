@@ -14,13 +14,8 @@ import java.util.Set;
  */
 public class AnagramFindr {
 
-    // Only allows lower case alphabets
     private static final String ALPHABET_ONLY_REGEX = "[^a-z]";
-
-    // The String which will replace unmatched characters
     private static final String EMPTY_STRING = "";
-
-    // Map to keep the list of anagrams
     private final Map<String, Set<String>> anagramDictionary = new HashMap<>();
 
     /**
