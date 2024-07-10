@@ -21,7 +21,11 @@ public class LatinMode implements Mode {
      * A map containing transformation rules where each key-value pair represents a character
      * from the input string and its replacement respectively.
      */
-    private final Map<Character, String> transformRules = Map.of('i', "j", 'u', "v", 'w', "vv");
+    private final Map<Character, String> transformRules = Map.of(
+            'i', "j",
+            'u', "v",
+            'w', "vv"
+    );
 
     /**
      * Returns the name of this mode which is used for representation

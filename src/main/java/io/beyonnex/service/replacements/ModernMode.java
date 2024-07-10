@@ -19,7 +19,11 @@ public class ModernMode implements Mode {
      * The map contains transformation rules where each key-value pair represent a character
      * in the input string and its corresponding modern replacement.
      */
-    private final Map<Character, Character> transformRules = Map.of('e', 'Æ', 'v', 'w', 's', 'z', 'c', 'k');
+    private final Map<Character, Character> transformRules = Map.of(
+            'v', 'w',
+            's', 'z',
+            'c', 'k'
+    );
 
     /**
      * Returns the name "MODERN" which represents the type of mode this implementation represents.

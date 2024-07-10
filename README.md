@@ -34,17 +34,15 @@ When you run the application, you'll be given these options:
 ### Example
 
 1. Run the application. You'll see several option choices:
-
-``` 
-**************************************************************
-[1] Check if two strings are anagrams
-[2] Get anagrams of a string
-[3] Add anagram match replacement mode: 'LATIN', 'MODERN'
-[4] Remove anagram match replacement mode: 'LATIN', 'MODERN'
-[5] Exit
-**************************************************************
-```
-
+  ``` 
+  **************************************************************
+  [1] Check if two strings are anagrams
+  [2] Get anagrams of a string
+  [3] Add anagram match replacement mode: 'LATIN', 'MODERN'
+  [4] Remove anagram match replacement mode: 'LATIN', 'MODERN'
+  [5] Exit
+  **************************************************************
+  ```
 2. Enter '1' and hit enter to check if two strings are anagrams. When prompted, input the two strings, confirming each
    with return.
 3. The application will tell you whether the two strings are anagrams.

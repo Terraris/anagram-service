@@ -60,6 +60,7 @@ public class AnagramCli {
         LOGGER.info(HEADER_LINE.get());
         LOGGER.info(WELCOME_TO_FINDER.get());
         LOGGER.info(CURRENT_REPLACEMENTS.get());
+
         for (ModeType type : ModeType.values()) {
             Mode mode = type.getInstance();
             LOGGER.info(MODE_REPLACEMENTS.format(mode.name(), mode));

@@ -12,7 +12,7 @@ public enum Message {
     ACTIVE_REPLACEMENT_MODES("Currently active replacement modes: %s"),
     CHOOSE_OPTION("Choose an option by entering its number and hitting return:"),
     INSTRUCTIONS("""
-                    
+            
             *******************************************************************************************************************
             [1] Check if two strings are anagrams
             [2] Get anagrams of a string

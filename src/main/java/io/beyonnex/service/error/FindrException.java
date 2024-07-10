@@ -7,6 +7,8 @@ package io.beyonnex.service.error;
  */
 public class FindrException extends IllegalArgumentException {
 
+    public static final String INVALID_INPUT_ERROR = "Input words must not be null";
+
     /**
      * Constructs a new FindrException with the specified detail message.
      *

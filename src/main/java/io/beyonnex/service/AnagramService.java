@@ -1,5 +1,6 @@
 package io.beyonnex.service;
 
+import io.beyonnex.service.error.FindrException;
 import io.beyonnex.service.replacements.Mode;
 import io.beyonnex.service.replacements.ModeType;
 
@@ -9,6 +10,8 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
+
+import static io.beyonnex.service.error.FindrException.INVALID_INPUT_ERROR;
 
 /**
  * This class is responsible for performing anagram search operations. It allows you to add or remove anagram match
@@ -39,6 +42,13 @@ public class AnagramService {
     }
 
     /**
+     * Deactivates all anagram match replacement modes.
+     */
+    public void clearAllModes() {
+        activeModes.clear();
+    }
+
+    /**
      * Returns a set of currently active anagram match replacement modes.
      *
      * @return Set of active modes
@@ -49,17 +59,18 @@ public class AnagramService {
 
     /**
      * Checks if the two input strings are anagrams considering the currently active modes.
-     * Runtime complexity of this method could be at most O(n log n), where n is the length of the longer string. This is dominated by the sort operation inside normalizeString.
+     * Runtime complexity of this method could be at most O(n log n), where n is the length of the longer string.
+     * This is dominated by the sort operation inside normalizeString.
      * To extend, you can add more complex replacement modes by creating a new Mode implementation and a corresponding ModeType enum value.
      *
      * @param firstWord  - first string to be checked
      * @param secondWord - second string to be checked
      * @return boolean - true if strings are anagrams, false otherwise
-     * @throws IllegalArgumentException - if either of the inputs is null
+     * @throws FindrException - if either of the inputs is null
      */
     public boolean areAnagrams(String firstWord, String secondWord) {
         if (firstWord == null || secondWord == null) {
-            throw new IllegalArgumentException("Input words must not be null");
+            throw new FindrException(INVALID_INPUT_ERROR);
         }
 
         String transformedA = applyModes(firstWord);
