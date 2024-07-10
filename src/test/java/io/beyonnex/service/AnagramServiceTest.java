@@ -1,7 +1,6 @@
 package io.beyonnex.service;
 
 import io.beyonnex.service.error.FindrException;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.Set;
@@ -14,16 +13,11 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class AnagramServiceTest {
 
-    private AnagramService anagramService = null;
-
-    @BeforeEach
-    public void setup() {
-        anagramService = new AnagramService();
-        anagramService.clearAllModes();
-    }
 
     @Test
     public void testAreAnagrams_providesForFeatureOne() {
+        AnagramService anagramService = new AnagramService();
+
         assertThat(anagramService.areAnagrams("anagram", "nag a ram")).isTrue();
 
         assertThat(anagramService.areAnagrams("New York Times", "monkeys write")).isTrue();
@@ -66,6 +60,8 @@ public class AnagramServiceTest {
 
     @Test
     public void testHypotheticalInvocations_providesForFeatureTwo() {
+        AnagramService anagramService = new AnagramService();
+
         String a = "Evil";
         String b = "Vile";
         String c = "life";
@@ -97,6 +93,8 @@ public class AnagramServiceTest {
 
     @Test
     public void testAreAnagrams_throwExceptionWhenNullInputs() {
+        AnagramService anagramService = new AnagramService();
+
         assertThrows(FindrException.class, () -> anagramService.areAnagrams(null, "someWord"),
                 INVALID_INPUT_ERROR);
 
@@ -109,6 +107,8 @@ public class AnagramServiceTest {
 
     @Test
     public void testModes_canBeActivatedAndDeactivated() {
+        AnagramService anagramService = new AnagramService();
+
         assertThat(anagramService.getActiveModes()).isEmpty();
 
         anagramService.activateMode(LATIN);
@@ -123,6 +123,8 @@ public class AnagramServiceTest {
 
     @Test
     public void testAreAnagrams_differentWhenLatinModeIsApplied() {
+        AnagramService anagramService = new AnagramService();
+
         assertThat(anagramService.areAnagrams("Thomas Overburie", "O! O! a busie murther")).isFalse();
         assertThat(anagramService.areAnagrams("ij ij ij ij", "iiii iiii")).isFalse();
         assertThat(anagramService.areAnagrams("wuhuw", "vvvhvvv")).isFalse();
@@ -136,6 +138,8 @@ public class AnagramServiceTest {
 
     @Test
     public void testAreAnagrams_differentWhenModernModeIsApplied() {
+        AnagramService anagramService = new AnagramService();
+
         assertThat(anagramService.areAnagrams("wwww", "vvvv")).isFalse();
         assertThat(anagramService.areAnagrams("wssw", "vzzv")).isFalse();
         assertThat(anagramService.areAnagrams("wccc", "vkkk")).isFalse();
@@ -149,6 +153,8 @@ public class AnagramServiceTest {
 
     @Test
     public void testGetAnagrams_doesContainItselfIfQueriedInOtherCase() {
+        AnagramService anagramService = new AnagramService();
+
         anagramService.areAnagrams("Evil", "Vile");
 
         Set<String> anagramSetOfEvil = anagramService.getAnagrams("evil");
@@ -160,6 +166,8 @@ public class AnagramServiceTest {
 
     @Test
     public void testGetAnagrams_theSameStringIsNotRearrangedAndThereforeNotAnAnagram() {
+        AnagramService anagramService = new AnagramService();
+
         anagramService.areAnagrams("Evil", "Evil");
 
         Set<String> anagramSetOfEvil = anagramService.getAnagrams("Evil");
@@ -171,6 +179,8 @@ public class AnagramServiceTest {
 
     @Test
     public void testGetAnagrams_doesNotContainItself() {
+        AnagramService anagramService = new AnagramService();
+
         anagramService.areAnagrams("silent", "listen");
 
         Set<String> anagramSetOfListen = anagramService.getAnagrams("listen");
@@ -183,6 +193,8 @@ public class AnagramServiceTest {
 
     @Test
     public void testDuplicatesInAnagrams() {
+        AnagramService anagramService = new AnagramService();
+
         String a = "ana";
         String b = "naa";
         String c = "aan";
@@ -199,11 +211,15 @@ public class AnagramServiceTest {
 
     @Test
     public void testAreAnagrams_ignoreWhiteSpaceAndCaseSensitivity() {
+        AnagramService anagramService = new AnagramService();
+
         assertThat(anagramService.areAnagrams("Listen ", "SiLEnT")).isTrue();
     }
 
     @Test
     public void testAreAnagrams_withEmptyStrings() {
+        AnagramService anagramService = new AnagramService();
+
         assertThat(anagramService.areAnagrams("", "")).isTrue();
         assertThat(anagramService.areAnagrams("", "notempty")).isFalse();
         assertThat(anagramService.areAnagrams("notempty", "")).isFalse();
@@ -211,6 +227,8 @@ public class AnagramServiceTest {
 
     @Test
     public void testGetAnagrams_EmptyResultForNonExistenceWord() {
+        AnagramService anagramService = new AnagramService();
+
         assertThat(anagramService.getAnagrams("nonexistenceword")).isEmpty();
     }
 

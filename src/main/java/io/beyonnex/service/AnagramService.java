@@ -42,13 +42,6 @@ public class AnagramService {
     }
 
     /**
-     * Deactivates all anagram match replacement modes.
-     */
-    public void clearAllModes() {
-        activeModes.clear();
-    }
-
-    /**
      * Returns a set of currently active anagram match replacement modes.
      *
      * @return Set of active modes

@@ -34,6 +34,7 @@ When you run the application, you'll be given these options:
 ### Example
 
 1. Run the application. You'll see several option choices:
+
   ``` 
   **************************************************************
   [1] Check if two strings are anagrams
@@ -43,6 +44,7 @@ When you run the application, you'll be given these options:
   [5] Exit
   **************************************************************
   ```
+
 2. Enter '1' and hit enter to check if two strings are anagrams. When prompted, input the two strings, confirming each
    with return.
 3. The application will tell you whether the two strings are anagrams.
@@ -81,6 +83,7 @@ the [license](https://www.gnu.org/licenses/gpl-3.0.en.html) ot the `LICENSE` fil
 If there are any questions or issues not covered in this document, please contact the project owner.
 
 ## Detailed Work Log
+
 Below is a breakdown of how time was spent during the development of this project:
 
 - 1 hour: Test Driven Development for proof-of-concept with implementation of the basic use case.
