@@ -69,29 +69,27 @@ public class AnagramServiceTest {
 
         // Given these hypothetical invocations
         boolean valueF1_AB = anagramService.areAnagrams(a, b);
-        assertThat(valueF1_AB).isTrue();
         boolean valueF1_BC = anagramService.areAnagrams(b, c);
-        assertThat(valueF1_BC).isFalse();
         boolean valueF1_AD = anagramService.areAnagrams(a, d);
-        assertThat(valueF1_AD).isTrue();
+
+        assertThat(valueF1_BC).isFalse();
+        // *IF* A, B and D are anagrams
+        assertThat(valueF1_AB && valueF1_AD).isTrue();
 
         // f2(A) should return [B, D]
-        Set<String> valueF2_A = anagramService.getAnagrams(a);
-        assertThat(valueF2_A)
+        assertThat(anagramService.getAnagrams(a))
                 .isNotNull()
                 .hasSize(2)
                 .containsOnly(b, d);
 
         // f2(B) should return [A, D]
-        Set<String> valueF2_B = anagramService.getAnagrams(b);
-        assertThat(valueF2_B)
+        assertThat(anagramService.getAnagrams(b))
                 .isNotNull()
                 .hasSize(2)
                 .containsOnly(a, d);
 
         // f2(C) should return []
-        Set<String> valueF2_C = anagramService.getAnagrams(c);
-        assertThat(valueF2_C)
+        assertThat(anagramService.getAnagrams(c))
                 .isNotNull()
                 .isEmpty();
     }
