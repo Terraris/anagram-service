@@ -90,3 +90,24 @@ Below is a breakdown of how time was spent during the development of this projec
 - 3 hours: 'Implementing it out', add interfaces, modes (and their application), logging, refactoring, unit-tests.
 - 2 hours: Creating a CLI for the app.
 - 1 hour: clean-up.
+- 1 (additional) hour: more precision in the test cases, extend documentation
+
+## Architectural Decisions
+The architecture of the `AnagramFindr` is a reflection of balancing the efficiency of anagram operations and the 
+flexibility required in a dynamic application setting. This balance is demonstrated in the decision to deviate 
+from traditional methods, which included usage of more complex structures like `Anatree`.
+
+The Anatree algorithm tends to be resource-intensive. It requires significant memory and computational power to maintain
+an anagram dictionary in a trie-like structure. Such an exhaustive approach can result in potential scalability issues.
+
+To mitigate these concerns the implementation utilizes a HashMap-based anagram dictionary. All anagrams, being 
+permutations of a particular set of letters, are held as values against the sorted string of those letters as keys in 
+the HashMap. The HashMap-based dictionary strategy employing constant time *(O(1))* for search and insert operations.
+
+The architectural design is built towards future adaptability. The service provides a dynamic functionality allowing 
+users to activate or deactivate specific match replacement modes. 
+### conclusion
+The *adaptiveness* of the AnagramService design ensures minimal ripple effects when introducing new functionalities. 
+Using the principles of open-closed design, the architecture ensures robustness while remaining adaptable to changing 
+requirements. These decisions principles ensure effective and efficient anagram operations, 
+circumvent scalability issues, and embrace system evolution for future needs. 

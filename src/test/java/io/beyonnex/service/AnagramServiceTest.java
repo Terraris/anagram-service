@@ -62,33 +62,36 @@ public class AnagramServiceTest {
     public void testHypotheticalInvocations_providesForFeatureTwo() {
         AnagramService anagramService = new AnagramService();
 
-        String a = "Evil";
-        String b = "Vile";
+        String a = "evil";
+        String b = "vile";
         String c = "life";
         String d = "live";
 
-        anagramService.areAnagrams(a, b);
-        anagramService.areAnagrams(a, c);
-        anagramService.areAnagrams(a, d);
+        // Given these hypothetical invocations
+        boolean valueF1_AB = anagramService.areAnagrams(a, b);
+        boolean valueF1_BC = anagramService.areAnagrams(b, c);
+        boolean valueF1_AD = anagramService.areAnagrams(a, d);
 
-        Set<String> anagramSetOfEvil = anagramService.getAnagrams(a);
-        assertThat(anagramSetOfEvil)
+        assertThat(valueF1_BC).isFalse();
+        // *IF* A, B and D are anagrams
+        assertThat(valueF1_AB && valueF1_AD).isTrue();
+
+        // f2(A) should return [B, D]
+        assertThat(anagramService.getAnagrams(a))
                 .isNotNull()
                 .hasSize(2)
                 .containsOnly(b, d);
 
-        Set<String> anagramSetOfVile = anagramService.getAnagrams(b);
-        assertThat(anagramSetOfVile)
+        // f2(B) should return [A, D]
+        assertThat(anagramService.getAnagrams(b))
                 .isNotNull()
                 .hasSize(2)
                 .containsOnly(a, d);
 
-        Set<String> anagramSetOfLife = anagramService.getAnagrams(c);
-        assertThat(anagramSetOfLife)
+        // f2(C) should return []
+        assertThat(anagramService.getAnagrams(c))
                 .isNotNull()
                 .isEmpty();
-
-
     }
 
     @Test
