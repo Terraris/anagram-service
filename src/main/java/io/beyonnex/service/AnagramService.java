@@ -4,12 +4,12 @@ import io.beyonnex.service.error.FindrException;
 import io.beyonnex.service.replacements.Mode;
 import io.beyonnex.service.replacements.ModeType;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import static io.beyonnex.service.error.FindrException.INVALID_INPUT_ERROR;
 
@@ -20,6 +20,7 @@ import static io.beyonnex.service.error.FindrException.INVALID_INPUT_ERROR;
 public class AnagramService {
 
     private static final String ALPHABET_ONLY_REGEX = "[^a-z]";
+    private static final int CHARACTER_SET_SIZE = 256; // ASCII
     private final Map<String, Set<String>> anagramDictionary = new HashMap<>();
     private final Set<ModeType> activeModes = new HashSet<>();
 
@@ -52,9 +53,9 @@ public class AnagramService {
 
     /**
      * Checks if the two input strings are anagrams considering the currently active modes.
-     * Runtime complexity of this method could be at most O(n log n), where n is the length of the longer string.
-     * This is dominated by the sort operation inside normalizeString.
-     * To extend, you can add more complex replacement modes by creating a new Mode implementation and a corresponding ModeType enum value.
+     * Runtime complexity of this method could be at most O(n), where n is the length of the strings.
+     * This is dominated by the building of character histograms and generating group keys.
+     * Will get 'memory-hungry' with big character-set sizes.
      *
      * @param firstWord  - first string to be checked
      * @param secondWord - second string to be checked
@@ -71,10 +72,13 @@ public class AnagramService {
         String normalizedA = normalizeString(transformedA);
         String normalizedB = normalizeString(transformedB);
 
-        addStringToAnagramMap(normalizedA, firstWord);
-        addStringToAnagramMap(normalizedB, secondWord);
+        String keyA = generateGroupKey(normalizedA);
+        String keyB = generateGroupKey(normalizedB);
 
-        return normalizedA.equals(normalizedB);
+        addStringToAnagramMap(keyA, firstWord);
+        addStringToAnagramMap(keyB, secondWord);
+
+        return keyA.equals(keyB);
     }
 
     /**
@@ -89,7 +93,8 @@ public class AnagramService {
     public Set<String> getAnagrams(String word) {
         String transformedWord = applyModes(word);
         String normalizedWord = normalizeString(transformedWord);
-        return anagramDictionary.getOrDefault(normalizedWord, new HashSet<>())
+        String key = generateGroupKey(normalizedWord);
+        return anagramDictionary.getOrDefault(key, new HashSet<>())
                 .stream()
                 .filter(anagram -> !anagram.equals(word))
                 .collect(Collectors.toSet());
@@ -125,7 +130,6 @@ public class AnagramService {
     private String normalizeString(String word) {
         String lowerCase = word.toLowerCase().replaceAll(ALPHABET_ONLY_REGEX, "");
         char[] chars = lowerCase.toCharArray();
-        Arrays.sort(chars);
         return new String(chars);
     }
 
@@ -146,5 +150,32 @@ public class AnagramService {
     // @formatter:on
     private void addStringToAnagramMap(String sorted, String original) {
         anagramDictionary.computeIfAbsent(sorted, k -> new HashSet<>()).add(original);
+    }
+
+    /**
+     * Method to generate a unique key for corresponding anagram group.
+     *
+     * @param word - the string to be transformed
+     * @return the generated key
+     */
+    private String generateGroupKey(String word) {
+        int[] histogram = new int[CHARACTER_SET_SIZE];
+
+        word.chars().forEach(character -> histogram[character]++);
+
+        return getHistogramString(histogram);
+    }
+
+    /**
+     * Method to generate a histogram string representation for a histogram.
+     *
+     * @param histogram - the array of integers representing the histogram
+     * @return the histogram string representation
+     */
+    private String getHistogramString(int[] histogram) {
+        return IntStream.range(0, histogram.length)
+                .filter(i -> histogram[i] != 0)
+                .mapToObj(i -> new StringBuilder().append((char) i).append(histogram[i]))
+                .collect(Collectors.joining());
     }
 }
