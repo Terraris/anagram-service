@@ -100,9 +100,11 @@ from traditional methods, which included usage of more complex structures like `
 The Anatree algorithm tends to be resource-intensive. It requires significant memory and computational power to maintain
 an anagram dictionary in a trie-like structure. Such an exhaustive approach can result in potential scalability issues.
 
-To mitigate these concerns the implementation utilizes a HashMap-based anagram dictionary. All anagrams, being 
-permutations of a particular set of letters, are held as values against the sorted string of those letters as keys in 
-the HashMap. The HashMap-based dictionary strategy employing constant time *(O(1))* for search and insert operations.
+To mitigate these concerns a HashMap-based anagram dictionary with character histograms as keys has been implemented.
+All anagrams, being permutations of a particular set of letters, have the same character histogram. The HashMap-based
+dictionary strategy. All permutations are held as values against their corresponding character histogram key in the 
+HashMap. The HashMap combined with character histogram generation provides constant-time (O(1)) search and insert
+operations.
 
 The architectural design is built towards future adaptability. The service provides a dynamic functionality allowing 
 users to activate or deactivate specific match replacement modes. 
