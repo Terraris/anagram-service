@@ -133,23 +133,17 @@ public class AnagramService {
         return new String(chars);
     }
 
-    // @formatter:off
     /**
-     * Method to add the original string to the anagram dictionary under its sorted key.
+     * Method to add the original string to the anagram dictionary under its string key.
      * If the key is already present in the dictionary, the original string is added to the
      * existing set associated with that key. If not, it creates a new set and adds the original
      * string to it.
      *
-     * @param sorted   - the normalized version of the original string
+     * @param string   - the normalized version of the original string
      * @param original - the original string
-     * <p>
-     * To extend, one could categorize anagrams not only based on the sorted character sequence, but also on other
-     * factors like length of the string, frequency of certain characters etc.
-     *
      */
-    // @formatter:on
-    private void addStringToAnagramMap(String sorted, String original) {
-        anagramDictionary.computeIfAbsent(sorted, k -> new HashSet<>()).add(original);
+    private void addStringToAnagramMap(String string, String original) {
+        anagramDictionary.computeIfAbsent(string, k -> new HashSet<>()).add(original);
     }
 
     /**
