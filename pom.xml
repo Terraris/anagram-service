@@ -19,6 +19,7 @@
         <junit-jupiter-api.version>5.10.3</junit-jupiter-api.version>
         <maven-compiler-plugin.version>3.13.0</maven-compiler-plugin.version>
         <assertj-core.version>3.26.0</assertj-core.version>
+        <guava.version>33.2.1-jre</guava.version>
     </properties>
 
     <dependencies>
@@ -33,6 +34,13 @@
             <artifactId>logback-classic</artifactId>
             <version>${logback-classic.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>${guava.version}</version>
+        </dependency>
+
 
 
         <dependency>

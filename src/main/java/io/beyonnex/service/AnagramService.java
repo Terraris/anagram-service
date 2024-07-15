@@ -1,10 +1,11 @@
 package io.beyonnex.service;
 
+import com.google.common.collect.HashMultiset;
+import com.google.common.collect.Multiset;
 import io.beyonnex.service.error.FindrException;
 import io.beyonnex.service.replacements.Mode;
 import io.beyonnex.service.replacements.ModeType;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -68,8 +69,8 @@ public class AnagramService {
 
         String transformedA = applyModes(firstWord);
         String transformedB = applyModes(secondWord);
-        String normalizedA = normalizeString(transformedA);
-        String normalizedB = normalizeString(transformedB);
+        Multiset<Character> normalizedA = getNormalizedMultiset(transformedA);
+        Multiset<Character> normalizedB = getNormalizedMultiset(transformedB);
 
         addStringToAnagramMap(normalizedA, firstWord);
         addStringToAnagramMap(normalizedB, secondWord);
@@ -88,8 +89,9 @@ public class AnagramService {
      */
     public Set<String> getAnagrams(String word) {
         String transformedWord = applyModes(word);
-        String normalizedWord = normalizeString(transformedWord);
-        return anagramDictionary.getOrDefault(normalizedWord, new HashSet<>())
+        Multiset<Character> normalizedWord = getNormalizedMultiset(transformedWord);
+        String key = generateKey(normalizedWord);
+        return anagramDictionary.getOrDefault(key, new HashSet<>())
                 .stream()
                 .filter(anagram -> !anagram.equals(word))
                 .collect(Collectors.toSet());
@@ -114,37 +116,46 @@ public class AnagramService {
     }
 
     /**
-     * Method to normalize an input string for easier comparison with other strings.
-     * It converts the string to lower case, removes all non-alphabet characters and sorts it alphabetically.
+     * Retrieves a normalized multiset for a given word.
      *
-     * @param word - the string to be normalized
-     * @return the normalized string
-     * <p>
-     * To extend, one could also remove common stop words or stemming the words before sorting.
+     * @param word The input word to be processed
+     * @return The multiset containing the normalized characters of the word
      */
-    private String normalizeString(String word) {
+    private Multiset<Character> getNormalizedMultiset(String word) {
         String lowerCase = word.toLowerCase().replaceAll(ALPHABET_ONLY_REGEX, "");
-        char[] chars = lowerCase.toCharArray();
-        Arrays.sort(chars);
-        return new String(chars);
+        Multiset<Character> multiset = HashMultiset.create();
+
+        for (char c: lowerCase.toCharArray()) {
+            multiset.add(c);
+        }
+
+        return multiset;
     }
 
-    // @formatter:off
     /**
-     * Method to add the original string to the anagram dictionary under its sorted key.
-     * If the key is already present in the dictionary, the original string is added to the
-     * existing set associated with that key. If not, it creates a new set and adds the original
-     * string to it.
+     * Adds a string to the anagram dictionary map.
      *
-     * @param sorted   - the normalized version of the original string
-     * @param original - the original string
-     * <p>
-     * To extend, one could categorize anagrams not only based on the sorted character sequence, but also on other
-     * factors like length of the string, frequency of certain characters etc.
-     *
+     * @param sorted   The multiset of characters in the string.
+     * @param original The original string.
      */
-    // @formatter:on
-    private void addStringToAnagramMap(String sorted, String original) {
-        anagramDictionary.computeIfAbsent(sorted, k -> new HashSet<>()).add(original);
+    private void addStringToAnagramMap(Multiset<Character> sorted, String original) {
+        String key = sorted.stream()
+                .map(String::valueOf)
+                .sorted()
+                .collect(Collectors.joining());
+        anagramDictionary.computeIfAbsent(key, k -> new HashSet<>()).add(original);
+    }
+
+    /**
+     * Generates a key for a given Multiset of characters.
+     *
+     * @param multiset the Multiset of characters
+     * @return the generated key as a string
+     */
+    private String generateKey(Multiset<Character> multiset) {
+        return multiset.stream()
+                .map(String::valueOf)
+                .sorted()
+                .collect(Collectors.joining());
     }
 }
