@@ -100,9 +100,10 @@ from traditional methods, which included usage of more complex structures like `
 The Anatree algorithm tends to be resource-intensive. It requires significant memory and computational power to maintain
 an anagram dictionary in a trie-like structure. Such an exhaustive approach can result in potential scalability issues.
 
-To mitigate these concerns the implementation utilizes a HashMap-based anagram dictionary. All anagrams, being 
-permutations of a particular set of letters, are held as values against the sorted string of those letters as keys in 
-the HashMap. The HashMap-based dictionary strategy employing constant time *(O(1))* for search and insert operations.
+The implementation utilizes Guava's Multiset-based anagram dictionary. Each Multiset, which represents a normalized
+form of a string (the frequency count of each character) acts as a key in the HashMap. All anagrams correspond to
+the same Multiset and are stored as values against it in the dictionary. This strategy provides constant time operations
+for search and insert.
 
 The architectural design is built towards future adaptability. The service provides a dynamic functionality allowing 
 users to activate or deactivate specific match replacement modes. 
