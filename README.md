@@ -102,7 +102,7 @@ an anagram dictionary in a trie-like structure. Such an exhaustive approach can 
 
 To mitigate these concerns the implementation utilizes a HashMap-based anagram dictionary. All anagrams, being 
 permutations of a particular set of letters, are held as values against the sorted string of those letters as keys in 
-the HashMap. The HashMap-based dictionary strategy employing constant time *(O(1))* for search and insert operations.
+the HashMap. The HashMap-based dictionary strategy employing a complexity of *(O(n log n))* due to the sorting.
 
 The architectural design is built towards future adaptability. The service provides a dynamic functionality allowing 
 users to activate or deactivate specific match replacement modes. 
