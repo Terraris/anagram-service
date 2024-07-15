@@ -135,11 +135,11 @@ public class AnagramService {
     /**
      * Adds a string to the anagram dictionary map.
      *
-     * @param sorted   The multiset of characters in the string.
+     * @param characters   The multiset of characters in the string.
      * @param original The original string.
      */
-    private void addStringToAnagramMap(Multiset<Character> sorted, String original) {
-        String key = sorted.stream()
+    private void addStringToAnagramMap(Multiset<Character> characters, String original) {
+        String key = characters.stream()
                 .map(String::valueOf)
                 .sorted()
                 .collect(Collectors.joining());
